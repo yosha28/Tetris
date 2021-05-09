@@ -70,13 +70,24 @@ namespace Tetris
         {
             DirectoryInfo dir = new DirectoryInfo(".");
             string path = dir + "Record.txt";
-            int record = 0;
-            using (StreamReader sr = File.OpenText(path))
+           int record = 0;
+            if (!File.Exists(path))
             {
-                record = int.Parse(sr.ReadToEnd());
-                return record;
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.Write($"{record} ");
+                }
             }
+            else
+            {
+                using (StreamReader sr = File.OpenText(path))
+                {
+                    record = int.Parse(sr.ReadToEnd());
+                   
+                }
 
+            }
+            return record;
         }
 
     }
